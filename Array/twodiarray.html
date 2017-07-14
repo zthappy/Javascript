@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>二维数组</title>
+</head>
+<body>
+<div class="container">
+	<div>
+		<input type="text" id="wid">*<input type="text" id="hei">
+		<button id="initarr" onclick="initArray()">生成二维数组</button>
+		<div id="showarray"></div>
+	</div>
+	<div id="toArr1">
+		
+	</div>
+</div>
+	<script type="text/javascript">
+	function _(id) {
+		return document.getElementById(id);
+	}
+	function initArray(wid,hei){
+		wid = _("wid").value;
+		hei = _("hei").value;
+		var showarray = _("showarray");
+		var initarr = _("initarr");
+		var arr = [];
+		var str = "";
+		for(var i = 0;i<wid;i++){
+			arr[i] =new Array();
+			for(var j = 0;j<hei;j++){
+				arr[i][j] = Math.round(Math.random()*100);
+				if(arr[i][j].toString().length < 2){
+					str = str + arr[i][j] + "&nbsp;&nbsp;&nbsp;"
+				}
+				else {
+					str = str + arr[i][j] + "&nbsp;&nbsp;"
+				}
+			
+			}
+			str = str + '<br>';
+		}
+		showarray.innerHTML = str;
+		var toarr1 = toArr(arr);
+		_("toArr1").innerHTML = "转换成一维<br>" + toarr1;
+	}
+	// 转换成一维的
+	function toArr(arr){
+		var arr1 = [];
+		for(var i = 0;i<arr.length;i++) {
+			for (var j = 0; j < arr[i].length; j++) {
+				arr1.push(arr[i][j]);
+			}
+		}
+		console.log(arr);
+		console.log(arr1);
+		return arr1;
+	}
+	// 一维数组转换成二维数组
+	function toMatrix(i,j,arr){
+		var arr1 = [];
+		for(var k = 0;k<i;k++){
+			arr1[k] = new Array();
+			for(var t = 0;t<j;t++) {
+				arr1[k][t] = arr[k*i+t];
+			}
+		}
+		console.log(arr1);
+		return arr1;
+	}
+	</script>
+</body>
+</html>
