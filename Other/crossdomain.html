@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>cors</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/*var xdr = new XDomainRequest();
+		xdr.onload = function(){
+			console.log("aaa");
+			alert(xdr.responseText);
+		}
+		xdr.onerror = function(){
+			alert("An error occured");
+		}
+		xdr.open("get","http://www.somewhere-else.com/page/");
+		xdr.send(null);*/
+		function handle(response) {
+			console.log("jsonp实现:"+response.data[0].cate_show);
+		}
+		var script = document.createElement("script");
+		script.src = "https://cre.dp.sina.cn/api/v3/get?cateid=1o&cre=tianyi&mod=wnews&merge=3&statics=1&length=20&tm=1489716199&ad={'rotate_count':1037,'page_url':'https://news.sina.cn/?from=wap','channel':'131250','platform':'wap','timestamp':1500106523501}&action=0&up=0&down=0&length=18&_=1500106523550&callback=handle";
+		document.body.insertBefore(script,document.body.firstChild);
+		// comet
+		function create(url,process,finished){
+			var xhr = new XMLHttpRequest();
+			var received = 0;
+			xhr.open("get",url,true);
+			xhr.onreadystatechange = function(){
+				var result;
+				if(xhr.resdyState == 3) {
+					result = xhr.responseText.substring(received);
+					received += result.length;
+					process(result);
+				}
+				else if(xhr.resdyState == 4){
+					finished(xhr.responseText);
+				}
+			};
+			xhr.send(null);
+			return xhr
+		}
+	</script>
+	
+</body>
+</html>
