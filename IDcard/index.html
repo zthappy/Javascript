@@ -1,0 +1,119 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>identity</title>
+</head>
+<body>
+	<div class="container">
+		<div class="sub1">
+			<label>请输入你的身份证号：</label>
+			<input type="text" name="identity" id="identity" placeholder="请输入你的身份证号" oninput="getJson()">
+			<div id="Idcity"></div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+function getJson() {
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState == 4){
+			if((xhr.status >= 200 && status < 300)||(status == 304)){
+				var obj = xhr.responseText;
+				var a = document.getElementById("identity").value;
+				var b = document.getElementById("Idcity");
+				if(a.length == 6){
+					for(var i in obj){
+						
+					}
+				}
+			}
+			else {
+				//alert("unsuccessful"+xhr.status);
+			}
+		}
+	}
+	xhr.open("get","identity.json",true);
+	xhr.send();
+}
+</script>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="identity.js"></script>
+	<title>ident</title>
+</head>
+<body>
+	<div class="container">
+		<input type="text" name="inputIdenty" placeholder="请输入十八位身份证号" class="inputIdenty" maxlength="18">
+		<div id="showidenty"></div>
+		<div id="showcity"></div>
+	</div>
+</body>
+<script type="text/javascript">
+	var showidenty = $("#showidenty");
+	var inputIdenty = $(".inputIdenty");
+	var showcity = $("#showcity");
+	var arr = [];
+    /*inputIdenty.oninput = function(){
+    	//alert(inputIdenty.value);
+    	showidenty.innerHTML = inputIdenty.value;
+
+    }*/
+    inputIdenty.onkeyup = function() {
+        showidenty.innerHTML = inputIdenty.value;
+    	if(inputIdenty.value.length == 6) {
+	    	var xhr = new XMLHttpRequest();
+	    	xhr.onreadystatechange = function() {
+	    		if(xhr.readyState == 4){
+	    			if((xhr.status >= 200 && status < 300)||(status == 304)){
+	    				var obj = eval(xhr.responseText);//这个eval简直是个坑
+	    				//console.log(obj);
+	    				//alert(obj.length);
+	    				//console.log(obj1[1].BM);
+	    				var arr = Array.prototype.slice.call(obj);
+	    				for(var i = 0; i<obj.length; i++) {
+	    					if(obj[i].BM == inputIdenty.value)
+	    					{
+	    						//console.log(obj[i].DQ);
+	    						showcity.innerHTML = obj[i].DQ;
+
+	    					}
+	    				}
+	    			}
+	    			else {
+	    				alert("unsuccessful"+xhr.status);
+	    			}
+	    		}
+	    	}
+	    	xhr.open("get","identity.json",true);
+	    	xhr.send(); 		
+    	}
+    	if(inputIdenty.value.length == 18) {
+    		var arrTocal = inputIdenty.value.split("");
+    		console.log(arrTocal);
+    		var xishu = [7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2];
+    		var sum = 0;
+    		for(var i=0;i<17;i++){
+    			sum += arrTocal[i]*xishu[i];
+    		}
+    		
+    		var yushu = sum - 11*Math.floor(sum/11);
+    		var lastNumarr = [1,0,"x","9",8,7,6,5,4,3,2];
+    		var lastNum = lastNumarr[yushu];
+    		if(lastNum != arrTocal[17])
+    		{
+    			alert("该身份证号码不正确");
+    		}
+    		
+    		/*console.log(yushu);
+    		console.log(lastNum);
+*/
+    	}
+    }
+</script>
+</html>
