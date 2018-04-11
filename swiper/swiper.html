@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>Swiper</title>
+	<style type="text/css">
+	table {
+		border-collapse: collapse;
+		margin: auto;
+	}
+	table td {
+		height: 30px;
+		width: 30px;
+		border:1px solid #999;
+		text-align: center;
+		font-size: 12px;
+	}
+	.btnGroup button {
+		background: beige;
+		border: 0;
+		outline: none;
+		margin: 5px;
+		padding: 10px;
+		border-radius: 5px;
+		color: #666;
+	}
+	</style>
+</head>
+<body>
+	<div class="btnGroup"><button onclick="refresh()">重来一局</button>
+	
+	</div>
+	<div id="container">
+		
+	</div>
+	<script type="text/javascript">
+		function $(id) {
+			return document.getElementById(id);
+		}
+		function swiper(size,num){ // size: the size of table; num: the count of  swiper
+			this.size = size;
+			this.num = num; 
+		}
+		swiper.prototype.initTable = function() {
+			// body...
+			var con = $("container");
+			var tbl = document.createElement("table");
+			tbl.id = "bg";
+			con.appendChild(tbl);
+			for (var i = 0; i < this.size; i++) {
+				var tr = document.createElement('tr');
+				for(var j = 0; j < this.size; j++) {
+					var td = document.createElement("td");
+					td.id = i + 'and' + j;
+					tr.appendChild(td);
+				}
+				tbl.appendChild(tr);
+			};
+
+
+		};
+		swiper.prototype.initSwiper = function() {
+			var num = this.num;
+			console.log(num);
+			var arrSwiper = [];
+			var table = document.getElementsByTagName('table')[0];
+			for(var i = 0; i < num; i++) {
+				var arrChild = [];
+				var x = Math.floor(Math.random()*10);
+				var y = Math.floor(Math.random()*10);
+				arrChild.push(x);
+				arrChild.push(y);
+
+				var hash = {};
+				if(!hash[arrChild]){
+					arrSwiper.push(arrChild);
+				}
+				else {
+					hash[arrChild] = true;
+				}
+				
+			}
+			for (var z = 0; z < arrSwiper.length; z++) {
+				table.rows[arrSwiper[z][0]].cells[arrSwiper[z][1]].flag = true;
+				
+			};
+			return arrSwiper;
+			console.log(arrSwiper.length);
+
+		}
+		// 标数字和雷 ，雷用 flag = true 标记
+		swiper.prototype.countSwiper = function() {
+			// body...
+			var size = this.size;
+			var table = document.getElementsByTagName('table')[0];
+			for(var i = 0; i < size; i++) {
+				for(var j = 0; j < size; j++) {
+					if(!table.rows[i].cells[j].flag) {
+						var count = 0;
+						for(var k = i-1; k <= i+1; k++) {
+							for(var z = j-1; z <= j+1; z++) {
+								if(k >= 0 && k < 10 && z < 10 && z >= 0 && table.rows[k].cells[z].flag) {
+									count = count + 1;
+								}
+								
+							}
+						}
+						table.rows[i].cells[j].count = count;
+						//table.rows[i].cells[j].innerHTML = count;
+					}
+					
+					
+				} 
+			}
+
+		};
+		swiper.prototype.operate = function() {
+			//console.log(this.size);
+			var size = this.size;
+			// body...
+			var table = document.getElementsByTagName('table')[0];
+			table.addEventListener("click",function(e){
+				//console.log(e.target);
+				
+				var arr = e.target.id.split("and");
+				//console.log(arr);
+				if(table.rows[arr[0]].cells[arr[1]].flag){
+					for(var i = 0; i < size; i++) {
+						for(var j = 0; j < size; j++) {
+							if(table.rows[i].cells[j].flag){
+								table.rows[i].cells[j].style.backgroundColor = "pink";
+							}
+							else{
+								table.rows[i].cells[j].innerHTML = table.rows[i].cells[j].count;
+							}
+						}
+					}
+					alert("fail");
+				}
+				else {
+					table.rows[arr[0]].cells[arr[1]].innerHTML = table.rows[arr[0]].cells[arr[1]].count;
+				}
+			})
+			table.addEventListener("contextmenu",function(e){
+				e.returnValue = false;
+				console.log("你点击了右键");
+				console.log(e);
+
+				var arr = e.target.id.split("and");
+				console.log(arr);
+				if(table.rows[arr[0]].cells[arr[1]].flag){
+					table.rows[arr[0]].cells[arr[1]].style.backgroundColor = "pink";
+				}
+				else {
+					for(var i = 0; i < size; i++) {
+						for(var j = 0; j < size; j++) {
+							if(table.rows[i].cells[j].flag){
+								table.rows[i].cells[j].style.backgroundColor = "pink";
+							}
+							else{
+								table.rows[i].cells[j].innerHTML = table.rows[i].cells[j].count;
+							}
+						}
+					}
+					alert("fail");
+					
+				}
+			})
+			///contextmenu
+			
+		};
+		window.onload = function() {
+			var s = new swiper(10,30);
+			
+			s.initTable();
+			s.initSwiper();
+			/*var num2 = s.initSwiper().length;
+			var btn = document.createElement("button");
+			btn.innerHTML = "雷数:"+num2;
+			var btnGroup = document.getElementsByClassName("btnGroup")[0];
+			btnGroup.appendChild(btn);*/
+			s.countSwiper();
+			s.operate();
+
+		}
+		function refresh() {
+			window.location.reload();
+		}
+	</script>
+</body>
+</html>

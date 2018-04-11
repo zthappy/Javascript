@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>Document</title>
+	<style>
+	html, body{
+		margin: 0;
+	}
+	p {
+		padding: 30px;
+	}
+
+	.popup {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: gray;
+		opacity: 0.4;
+	}
+	.popcon {
+		position: fixed;
+		left:30px;
+		right:30px;
+		top: 50%;
+		transform:translate(0,-50%);
+		background-color: #fff;
+		border-radius: 10px;
+		padding: 30px;
+	}
+	.btn {
+		display: block;
+		padding: 10px 30px;
+		background: #ff6540;
+		margin: 0 auto;
+		outline: none;
+		border: none;
+		color: #fff;
+		border-radius: 3px;
+		margin: 30px;
+	}
+	</style>
+</head>
+<body><div class="aaa">
+	<p>demo1</p>
+	<p>demo</p>
+	<p>demo</p>
+	<p>demo</p>
+	<button class="btn" onclick="openPop()">打开弹框</button>
+	<p>demo</p>
+	<p>demo</p>
+	<p>demo</p>
+	<p>demon</p>
+	<div class="pop" style="display:none">
+		<div class="popup" onclick="closePop()"></div>
+		<div class="popcon">弹框内容</div>
+	</div>
+	<script>
+	function openPop() {
+		document.querySelector(".pop").style.display = "block";
+		document.querySelector("body").style.overflow = "hidden";
+	} 
+	function closePop() {
+		document.querySelector(".pop").style.display = "none";
+		document.querySelector("body").style.overflow = "";
+	}
+	document.querySelector(".pop").addEventListener("touchmove",function(e){
+		e.preventDefault();
+	})
+	
+	</script>
+</body>
+</html>

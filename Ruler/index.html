@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+	<title>Ruler</title>
+	<!-- <script type="text/javascript" src="vue.min.js"></script> -->
+	<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	.kedu {
+		position: relative;
+		height: 55px;
+		width: 309px;
+		background-color: #333;
+		margin: 0 auto;
+		margin-top: 100px;
+		overflow-x:hidden;
+	}
+	.tri {
+		position: absolute;
+		top:0;
+		left: 150px;
+		width: 0;
+		height: 0;
+		border-left: 11.5px solid transparent;
+		border-right: 11.5px solid transparent;
+		border-top: 12.425px solid #fff;
+	}
+	#move {
+		background-color: #fff;
+		height: 40px;
+		width: 2060px;
+		margin-top: 12px;
+	}
+	</style>
+</head>
+<body>
+	<div>
+	  <div class="kedu">
+	  	<div class="tri"></div>
+	  	<div class="smallkedu" id="move" >1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7 8 9</div>
+	  </div>
+	</div>
+	<script type="text/javascript">
+	var movediv = document.getElementById("move");
+	var start_x,start_y,end_x,end_y;
+	var last_dis = 0;// 上次滑动的距离
+	var move_len = 0;
+	movediv.addEventListener("touchstart",function(e){
+		start_x = e.changedTouches[0].pageX;
+		start_y = e.changedTouches[0].pageY;
+		console.log(e);
+	})
+	movediv.addEventListener("touchmove",function(e){
+		var cur_X = e.changedTouches[0].pageX;
+		var dis = cur_X - start_x + last_dis;
+		move(movediv,dis);
+	})
+	movediv.addEventListener("touchend",function(e){
+		end_x = e.changedTouches[0].pageX;
+		end_y = e.changedTouches[0].pageY;
+		var dis = end_x - start_x + last_dis;
+		last_dis = dis;
+		console.log(dis);
+		if(dis == 0) {
+			console.log("error");
+		}
+		movediv.style.transform = "translateX("+dis+"px)";
+	})
+	function move(ele,dis){
+		ele.style.transform = "translateX("+dis+"px)";
+	}
+	</script>
+</body>
+</html>

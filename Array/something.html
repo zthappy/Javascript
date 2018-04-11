@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>SomeThing</title>
+	<style>
+	.container {
+		display: flex;
+		flex-direction:row;
+	}
+	.container div {
+		width: 200px;
+		height: 200px;
+		background: #9cfff5;
+		margin:5px;
+	}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="block" onclick="countArr()">给定一个数组A[0,1,...,n-1],请构建一个数组B[0,1,...,n-1],其中B中的元素B[i]=A[0]*A[1]*...*A[i-1]*A[i+1]*...*A[n-1]。不能使用除法。</div>
+		<div class="block" onclick="minest()">zuixiao</div>
+	</div>
+	<div class="showpop">
+		<div class="center">
+			
+		</div>
+	</div>
+	<script type="text/javascript">
+		function countArr() {
+			var arrA = [1,2,3,4,5,6,7,8,9,10,11,21,1,3];
+			var arrB = [];
+			for(var i = 0;i < arrA.length;i++){
+				var sum = 1;
+				for(var j = 0;j <= i;j++){
+					sum = sum * arrA[j];
+				}
+				arrB.push(sum);
+			}
+			console.log(arrB);
+		}
+		function minest(){
+			var arr = [12,123,1,13,3,32,321];
+			arr = arr.join("|").split("|");
+			for (var i = 0; i < arr.length - 1; i++) {
+				for (var j = 0; j < arr.length; j++) {
+					var a = arr[j] +arr[j+1];
+					var b = arr[j+1] + arr[j];
+					if(a>b){
+						var temp = arr[j];
+						arr[j] = arr[j+1];
+						arr[j+1] = temp;
+					}
+
+				};
+			};
+			console.log(arr.join(""));
+			return arr.join("");
+		}
+	</script>
+</body>
+</html>
