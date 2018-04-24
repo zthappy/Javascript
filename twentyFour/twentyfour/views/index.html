@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=750,target-densitydpi=device-dpi,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="no">
+	<meta name="format-detection" content="telephone=no">
+	<title><%= title%></title>
+	<script type="text/javascript" src="/javascripts/count.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="carnum">第<%= datas[0].id%>关</div>
+		<div class="nums">
+		
+			<span class="num1"><%= datas[0].num1 %> </span>
+			<span class="num2"><%= datas[0].num2 %> </span>
+			<span class="num3"><%= datas[0].num3 %> </span>
+			<span class="num4"><%= datas[0].num4 %> </span>
+		</div>
+		<div class="operators">
+			<span class="operator1">+</span>
+			<span class="operator2">-</span>
+			<span class="operator3">*</span>
+			<span class="operator4">/</span>
+			<span class="operator5">(</span>
+			<span class="operator6">)</span>
+		</div>
+		<div class="expression" id="expression">
+			1*8+8+8
+		</div>
+		<div class="equal" id="equal">=</div>
+	</div>
+</body>
+</html>
