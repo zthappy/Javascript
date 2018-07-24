@@ -45,25 +45,30 @@ function getJson() {
 <head>
 	<meta charset="UTF-8">
 	<script type="text/javascript" src="identity.js"></script>
+	<script type="text/javascript" src="idcard.js"></script>
 	<title>ident</title>
 </head>
 <body>
 	<div class="container">
-		<input type="text" name="inputIdenty" placeholder="请输入十八位身份证号" class="inputIdenty" maxlength="18">
+		<input type="text" name="inputIdenty" placeholder="请输入十八位身份证号" id="inputIdenty" maxlength="18">
 		<div id="showidenty"></div>
 		<div id="showcity"></div>
+		<div class="btn" id="btn">提交</div>
 	</div>
 </body>
 <script type="text/javascript">
-	var showidenty = $("#showidenty");
-	var inputIdenty = $(".inputIdenty");
+	var showidenty = $("#inputIdenty");
+	$("#btn").onclick = function() {
+		showidenty = showidenty.value;
+		console.log(showidenty);
+		var p = new Calculate();
+		p.reverse(showidenty)
+	}
+	
+	/*var inputIdenty = $(".inputIdenty");
 	var showcity = $("#showcity");
 	var arr = [];
-    /*inputIdenty.oninput = function(){
-    	//alert(inputIdenty.value);
-    	showidenty.innerHTML = inputIdenty.value;
-
-    }*/
+   
     inputIdenty.onkeyup = function() {
         showidenty.innerHTML = inputIdenty.value;
     	if(inputIdenty.value.length == 6) {
@@ -110,10 +115,7 @@ function getJson() {
     			alert("该身份证号码不正确");
     		}
     		
-    		/*console.log(yushu);
-    		console.log(lastNum);
-*/
     	}
-    }
+    }*/
 </script>
 </html>
