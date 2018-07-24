@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    qqq
+    <script type="text/javascript">
+
+
+    function Stack() {
+        this.dataStore = [];
+        this.top = 0;
+        this.push = push;
+        this.pop = pop;
+        this.peek = peek;
+        this.clear = clear;
+        this.length = length;
+    }
+    function push(element) {
+        this.dataStore[this.top++] = element;
+    }
+    function pop() {
+        return this.dataStore[--this.top];
+    }
+    function peek() {
+        return this.dataStore[this.top - 1];
+    }
+    function clear() {
+        this.top = 0;
+    }
+    function length() {
+        return this.top;
+    }
+
+/*
+思路：
+1. 从左至右扫描字符串，因为是扫描字符串，因此单个数字必须小于10
+2. 如果是操作数就直接输出
+3. 如果是运算符:
+    3-1. 如果栈为空或者栈顶运算符为"("或优先级比栈顶运算符的优先级高,则将此运算符入栈
+    3-2. 否则将栈顶运算符出栈输出,再转至3-1处比较
+    3-3. 如果是")",则依次弹出栈顶运算符，直到遇到"("为止,然后将"("出栈
+4. 不断重复直到扫描结束
+*/
+
+    function toReversePolishNotation(exp) {
+        //运算符栈
+        var oprts = new Stack();
+        //处理结果
+        var result = "";
+        for(var i = 0; i < exp.length; i++) { if(!isNaN(parseFloat(exp[i]))) { //如果是数字就直接输出（小于10） result += exp[i]; } else { //如果栈为空或者栈顶运算符为"("或优先级比栈顶运算符的优先级高,则将此运算符入栈 if(oprts.length() == 0 || oprts.peek() == "(" || compare(oprts.peek(), exp[i]) == 1) { oprts.push(exp[i]); } else { if(exp[i] == "(") { oprts.push(exp[i]); } else if(exp[i] == ")") { //如果是")",则依次弹出栈顶运算符，直到遇到"("为止,然后将"("出栈 while(oprts.peek() !== "(") { result += oprts.peek(); oprts.pop(); } oprts.pop(); } else { //否则将栈顶运算符出栈输出 result += oprts.peek(); oprts.pop(); //再次与栈顶元素比较 i = i - 1; } } } } while(oprts.length() > 0) {
+            result += oprts.peek();
+            oprts.pop();
+        }
+        return result;
+    }
+    //分析运算符优先级
+    function priority(oprt) {
+        switch(oprt) {
+            case "*": case "/":
+                return 1;
+                break;
+            case "+": case "-":
+                return 0;
+                break;
+            default:
+                return -1;
+                break;
+        }
+    }
+    //对运算符优先级进行对比
+    function compare(a, b) {
+        if(priority(a) < priority(b)) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    //计算后缀表达式的值
+    function calculate(exp) {
+        var ops = new Stack();
+        for(var i = 0; i < exp.length; i++) {
+            if(!isNaN(parseFloat(exp[i]))) {
+                //如果是数字就入栈
+                ops.push(exp[i]);
+            } else {
+                //栈中前两个元素出栈与运算符参与运算
+                var op1 = parseFloat(ops.peek());
+                ops.pop();
+                var op2 = parseFloat(ops.peek());
+                ops.pop();
+                switch(exp[i]) {
+                    case "+":
+                        ops.push(op2 + op1);
+                        break;
+                    case "-":
+                        ops.push(op2 - op1);
+                        break;
+                    case "*":
+                        ops.push(op2 * op1);
+                        break;
+                    case "/":
+                        ops.push(op2 / op1);
+                        break;
+                    default:
+                        return -1;
+                        break;
+                }
+            }
+        }
+        return ops.peek();
+    }
+
+/*var text = "1+(2*(3+4))-5";*/
+/*console.log(text + " 的后缀表达式是: " + toReversePolishNotation(text));*/
+/*console.log(text + " 的计算结果是: " + calculate(toReversePolishNotation(text)));*/
+    </script>
+</body>
+</html>
