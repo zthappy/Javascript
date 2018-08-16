@@ -27,6 +27,7 @@
     		<div>for in::<br><label for="" id="forin"></label></div>
     		<div>map::<br><label for="" id="map"></label></div>
     		<div>for of::<br><label for="" id="forof"></label></div>
+    		<div>rwhile::<br><label for="" id="tewhile"></label></div>
     	</div>
     </div>
 	<script type="text/javascript">
@@ -70,6 +71,14 @@
 		var t3 = t2-t1;
 		return t3;
 	}
+	function testwhile(arr){
+		var i = 0;
+		var len = arr.length;
+		while(i<len){
+			arr[i]
+			i++;
+		}
+	}
 	function $(id){
 		return document.getElementById(id);
 	}
@@ -87,6 +96,8 @@
 		$("map").innerHTML = maptime+"ms";
 		var foroftime = countTime(arr,testforOf)
 		$("forof").innerHTML = foroftime+"ms";
+		var whiletime = countTime(arr,testwhile);
+		$("tewhile").innerHTML = whiletime+"ms";
 	}
 	</script>
 </body>
