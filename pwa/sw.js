@@ -4,7 +4,8 @@ var cacheList=[
   '/',
   'index.html',
   'main.css',
-  'youhun.jpg'
+  'youhun.jpg',
+  'index.js'
 ]
 self.addEventListener('install',e =>{
   e.waitUntil(
